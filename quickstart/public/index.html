@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Voice-Video Module</title>
+  <link rel="stylesheet" href="index.css">
+</head>
+<body>
+<div id="remote-media"></div>
+<div id="controls">
+  <div id="preview">
+    <p class="instructions">Hello Beautiful</p>
+    <div id="local-media"></div>
+    <button id="button-preview">Preview My Camera</button>
+  </div>
+  <div id="room-controls">
+    <p class="instructions">Room Name:</p>
+    <input id="room-name" type="text" placeholder="Fetching Room-Name" readonly style="cursor: not-allowed"/>
+    <button id="button-join">Join Room</button>
+    <button id="button-leave">Leave Room</button>
+    <button id="button-confirm">
+      <a
+        id="confirm-link"
+        href="" 
+        style="text-decoration: none; color: white;">
+          Confirm Session
+      </a>
+    </button>
+  </div>
+  <div id="log"></div>
+</div> 
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="index.js"></script>
+</body>
+<script type="text/javascript">
+  var getUrlParameter = function getUrlParameter(sParam) {
+    var sPageURL = window.location.search.substring(1),
+        sURLVariables = sPageURL.split('&'),
+        sParameterName,
+        i;
+
+    for (i = 0; i < sURLVariables.length; i++) {
+        sParameterName = sURLVariables[i].split('=');
+
+        if (sParameterName[0] === sParam) {
+            return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
+        }
+    }
+  };
+
+  var roomNameInput = document.getElementById('room-name'),
+      roomName = getUrlParameter('roomName'),
+      isRefreshed = getUrlParameter('refresh'),
+      mentor = getUrlParameter('mentor'),
+      pupil = getUrlParameter('pupil'),
+      sessionId = getUrlParameter('sessionId'),
+      isMentor = getUrlParameter('isMentor'),
+      source = getUrlParameter('source');
+      buttonConfirm = document.getElementById('button-confirm'),
+      confirmLink = document.getElementById('confirm-link');
+
+    roomNameInput.value = roomName;
+
+    if (isMentor === '0') {
+      buttonConfirm.style.display = 'none';
+    } else {
+      confirmLink.href = 'http://127.0.0.1/teachu-main/frontend/web/session/default/confirm-session?mentor=' + mentor + '&pupil=' + pupil + '&session_id=' + sessionId + '&source=' + source + '&is_mentor=' + isMentor;
+    }
+
+</script>
+</html>
